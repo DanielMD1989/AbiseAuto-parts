@@ -1024,17 +1024,29 @@ $('au_signin').onclick=async()=>{
   $('au_signin').disabled=true;
   const {error}=await sb.auth.signInWithPassword({email,password:pass});
   $('au_signin').disabled=false;
-  if(error){showAuth(error.message,'err');return;}
+  if(error){
+    const m=(error.message||'').toLowerCase();
+    if(m.includes('confirm')){showAuth('Please confirm your email first — open the link we sent to '+email+', then sign in.','err');return;}
+    if(m.includes('invalid')){showAuth('Email or password is wrong. Check and try again.','err');return;}
+    showAuth(error.message,'err');return;
+  }
   bootSession();
 };
 $('au_signup').onclick=async()=>{
   const email=$('au_email').value.trim(),pass=$('au_pass').value;
-  if(!email||pass.length<6){showAuth('Enter email and a password of at least 6 characters','err');return;}
+  if(!email||pass.length<6){showAuth('Enter your email and a password of at least 6 characters','err');return;}
   $('au_signup').disabled=true;
-  const {error}=await sb.auth.signUp({email,password:pass});
+  const {data,error}=await sb.auth.signUp({email,password:pass});
   $('au_signup').disabled=false;
-  if(error){showAuth(error.message,'err');return;}
-  showAuth('Account created. If email confirmation is on, check your inbox, then sign in.','ok');
+  if(error){
+    const m=(error.message||'').toLowerCase();
+    if(m.includes('already')){showAuth('That email already has an account — just sign in above.','err');return;}
+    showAuth(error.message,'err');return;
+  }
+  // If the project has confirmation ON, there's no active session yet -> guide them to their inbox.
+  if(data && data.session){ bootSession(); return; }
+  showAuth('✓ Account created! Check your email ('+email+') and tap the confirmation link, then come back here and sign in.','ok');
+  $('au_pass').value='';
 };
 
 /* ============================================================

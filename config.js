@@ -4,6 +4,6 @@
 //  project here. Do NOT reuse the keys from any other app.
 // ============================================================
 window.ABISE_CONFIG = {
-  SUPABASE_URL: "https://zttjyldtutididisppzs.supabase.co/rest/v1/ ",
-  SUPABASE_ANON_KEY: "sb_publishable_T6EmZOXgnln_16s9RKdVoA_wKf-l_wl"
+  SUPABASE_URL: "PASTE_YOUR_SUPABASE_URL_HERE",
+  SUPABASE_ANON_KEY: "PASTE_YOUR_SUPABASE_ANON_KEY_HERE"
 };

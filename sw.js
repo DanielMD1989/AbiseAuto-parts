@@ -1,7 +1,7 @@
 // Abise Auto Parts service worker — auto-updating
 // Strategy: network-first for app files (always get latest when online),
 // fall back to cache only when offline. Bump VERSION to force refresh.
-const VERSION = 'abise-v1';
+const VERSION = 'abise-v2';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./config.js',
   './manifest.json','./icon-192.png','./icon-512.png'
